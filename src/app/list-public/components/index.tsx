@@ -1,29 +1,58 @@
-'use client'
+/* eslint-disable prettier/prettier */
+'use client';
 
-import { Select } from "@aws-sdk/client-dynamodb";
-import axios from "axios";
-import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+import Heading from '@/components/Heading';
+import { Button } from '@/components/ui/button';
+
+import { filesColumns } from './columns';
+import FilesDataTable from './data-table';
+import FilesFilter from './filters';
+
+import { FilesDBResponseData } from '@/types';
+import axios from 'axios';
+import { RefreshCcw } from 'lucide-react';
+
+
 
 export default function FilesPublicList() {
-  const [filesData, setFilesData] = useState([]);
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [filesData, setFilesData] = useState<FilesDBResponseData[]>([]);
 
-  async function handleSearchFiles() {
-    const response = await axios.post(
-      '/api/files-filter', { year: '2023' }
+  async function handleSearchFiles(year: string, electionType: string, county: string) {
+    setIsLoading(true)
+    const response = await axios.post<FilesDBResponseData[]>(
+      '/api/files-filter',
+      {
+        year,
+        electionType,
+        county
+      }
     );
 
     setFilesData(response.data)
+    setIsLoading(false)
   }
 
   return (
-    <div>
-      <h1>Public Files</h1>
-      <button onClick={handleSearchFiles}>Search</button>
-      <ul>
-        {filesData.map((file: any) => (
-          <li key={file.id}>{file.id}</li>
-        ))}
-      </ul>
-    </div>
-  )
+    <>
+      <div className="flex items-center justify-between">
+        <Heading title="Public Files" />
+        <Button
+          variant="outline"
+          onClick={() => router.refresh()}
+          size={'icon'}
+        >
+          <RefreshCcw className="h-4 w-4" />
+        </Button>
+      </div>
+      <div className='my-4 space-y-4'>
+        <FilesFilter isLoading={isLoading} handleSearchFiles={handleSearchFiles} />
+        <FilesDataTable columns={filesColumns} data={filesData} />
+      </div>
+    </>
+  );
 }
