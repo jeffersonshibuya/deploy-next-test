@@ -3,7 +3,7 @@ import Image from 'next/image'
 export const revalidate = 0;
 
 export default async function Home() {
-  const response = await fetch('http://localhost:3000/api/test')
+  const response = await fetch(`${process.env.NEXTAUTH_URL}/api/test`)
 
   const data = await response.json()
 
