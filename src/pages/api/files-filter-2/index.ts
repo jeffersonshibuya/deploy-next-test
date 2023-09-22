@@ -4,17 +4,20 @@ import { DynamoDBClient, ScanCommand } from '@aws-sdk/client-dynamodb';
 import { unmarshall } from '@aws-sdk/util-dynamodb';
 import { FilesDBResponseData } from '@/types';
 
-const ddbClient = new DynamoDBClient({
-  region: process.env.NEXT_AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.NEXT_AWS_ACCESS_KEY_ID || '',
-    secretAccessKey: process.env.NEXT_AWS_SECRET_ACCESS_KEY || ''
-  }
-});
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<FilesDBResponseData[] | string>
 ) {
+
+  const ddbClient = new DynamoDBClient({
+    region: process.env.NEXT_AWS_REGION,
+    credentials: {
+      accessKeyId: process.env.NEXT_AWS_ACCESS_KEY_ID || '',
+      secretAccessKey: process.env.NEXT_AWS_SECRET_ACCESS_KEY || ''
+    }
+  });
+  
   try {
     const input = {
       TableName: process.env.NEXT_AWS_DYNAMODB_TABLE_NAME,
