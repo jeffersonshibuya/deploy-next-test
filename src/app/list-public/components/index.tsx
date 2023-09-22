@@ -23,17 +23,23 @@ export default function FilesPublicList() {
 
   async function handleSearchFiles(year: string, electionType: string, county: string) {
     setIsLoading(true)
-    const response = await axios.post<FilesDBResponseData[]>(
-      '/api/files-filter-2',
-      {
-        year,
-        electionType,
-        county
-      }
-    );
-
-    setFilesData(response.data)
-    setIsLoading(false)
+    try {
+      const response = await axios.post<FilesDBResponseData[]>(
+        '/api/files-filter-2',
+        {
+          year,
+          electionType,
+          county
+        }
+      );
+  
+      console.log(response.data)
+  
+      setFilesData(response.data)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
