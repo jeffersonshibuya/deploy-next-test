@@ -7,8 +7,8 @@ import { FilesDBResponseData } from '@/types';
 const ddbClient = new DynamoDBClient({
   region: process.env.NEXT_AWS_REGION,
   credentials: {
-    accessKeyId: process.env.NEXT_AWS_ACCESS_KEY_ID || '',
-    secretAccessKey: process.env.NEXT_AWS_SECRET_ACCESS_KEY || ''
+    accessKeyId: 'AKIARQKPMY4YVNNZCMXV',
+    secretAccessKey: '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'
   }
 });
 export default async function handler(
