@@ -24,7 +24,7 @@ export default function FilesPublicList() {
   async function handleSearchFiles(year: string, electionType: string, county: string) {
     setIsLoading(true)
     const response = await axios.post<FilesDBResponseData[]>(
-      '/api/files-filter',
+      '/api/files-filter-2',
       {
         year,
         electionType,

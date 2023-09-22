@@ -59,7 +59,7 @@ export default function FilesFilter({
       form.setValue('county', { label: '', value: '' } as SelectionDefaultType);
 
       const response = await axios.post<FilesDBResponseData[]>(
-        '/api/files-filter',
+        '/api/files-filter-2',
         {
           year: yearSelected.value
         }
