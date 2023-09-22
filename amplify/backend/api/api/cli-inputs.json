@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/api": {
+      "name": "/api",
+      "lambdaFunction": "testnextdeploy2b33e9b6",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
