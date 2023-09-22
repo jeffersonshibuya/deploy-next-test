@@ -7,7 +7,7 @@ import { FilesDBResponseData } from '@/types';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<FilesDBResponseData[] | string>
+  res: NextApiResponse<any>
 ) {
 
   const ddbClient = new DynamoDBClient({
@@ -17,6 +17,14 @@ export default async function handler(
       secretAccessKey: process.env.NEXT_AWS_SECRET_ACCESS_KEY || ''
     }
   });
+
+  return res.status(200).json({
+    region: process.env.NEXT_AWS_REGION,
+    credentials: {
+      accessKeyId: process.env.NEXT_AWS_ACCESS_KEY_ID || '',
+      secretAccessKey: process.env.NEXT_AWS_SECRET_ACCESS_KEY || ''
+    }
+  })
   
   try {
     const input = {
