@@ -17,7 +17,7 @@ export default async function handler(
 ) {
   try {
     const input = {
-      TableName: process.env.NEXT_AWS_DYNAMODB_TABLE_NAME,
+      TableName: 'terraform-gasos-ballot-upload-library',
       FilterExpression: '#status <> :statusValue',
       ExpressionAttributeNames: {
         '#status': 'status'
